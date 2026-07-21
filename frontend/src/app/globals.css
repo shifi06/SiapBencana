@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand: #D93025;
+    --brand-dark: #A51E15;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    background: #F8F7F5;
+    color: #0D0D0D;
+  }
+}
+
+@layer components {
+  .text-brand { color: var(--brand); }
+  .bg-brand { background-color: var(--brand); }
+  .bg-brand-dark { background-color: var(--brand-dark); }
+  .border-brand { border-color: var(--brand); }
+  .hover\:bg-brand-dark:hover { background-color: var(--brand-dark); }
+  .focus\:border-brand:focus { border-color: var(--brand); }
+
+  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 10px; border-radius: 99px; }
+  .badge-verified { background: #EAF5EE; color: #1A7A4A; }
+  .badge-unverified { background: #F3F4F6; color: #6B7280; }
+
+  .input { width: 100%; padding: 11px 14px; border: 1.5px solid #E5E7EB; border-radius: 12px; font-size: 0.95rem; outline: none; transition: border-color 0.15s; background: white; }
+  .input:focus { border-color: var(--brand); }
+
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 10px; background: var(--brand); color: white; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer; transition: background 0.15s; }
+  .btn-primary:hover { background: var(--brand-dark); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 10px; background: white; color: #111; font-weight: 600; font-size: 0.875rem; border: 1.5px solid #E5E7EB; cursor: pointer; transition: all 0.15s; }
+  .btn-secondary:hover { border-color: #111; }
+
+  .btn-success { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; background: #16a34a; color: white; font-weight: 600; font-size: 0.8rem; border: none; cursor: pointer; }
+  .btn-success:hover { background: #15803d; }
+
+  .btn-warning { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; background: #FFFBEB; color: #B45309; font-weight: 600; font-size: 0.8rem; border: none; cursor: pointer; }
+  .btn-warning:hover { background: #B45309; color: white; }
+  
+  .btn-danger { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; background: #FEF2F2; color: var(--brand); font-weight: 600; font-size: 0.8rem; border: none; cursor: pointer; }
+  .btn-danger:hover { background: var(--brand); color: white; }
+
+  .card { background: white; border: 1px solid #E5E7EB; border-radius: 16px; padding: 1.25rem; }
+
+  /* Toast — floating pill, bukan bar full-width */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    white-space: nowrap;
+    max-width: calc(100vw - 2rem);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-up { animation: fadeUp 0.4s ease both; }

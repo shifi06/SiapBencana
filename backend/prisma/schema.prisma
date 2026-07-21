@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Relawan {
+  id           String        @id @default(cuid())
+  kode         String        @unique
+  passwordHash String
+  nama         String
+  kota         String
+  provinsi     String
+  keahlian     Keahlian
+  detail       String?
+  kontak       String
+  status       StatusRelawan @default(Siap)
+  verified     Boolean       @default(false)
+  flags        Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reports      Report[]
+
+  @@index([kota])
+  @@index([keahlian])
+  @@index([status])
+  @@map("relawan")
+}
+
+model Koordinator {
+  id           String   @id @default(cuid())
+  kode         String   @unique
+  passwordHash String
+  nama         String
+  instansi     String
+  wilayah      String
+  kontak       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("koordinator")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  kode         String   @unique
+  nama         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("admin")
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  relawanId  String
+  reporterIp String?
+  createdAt  DateTime @default(now())
+  relawan    Relawan  @relation(fields: [relawanId], references: [id], onDelete: Cascade)
+
+  @@map("report")
+}
+
+enum Keahlian {
+  Medis
+  Logistik
+  Teknik
+  Komunikasi
+  Psikologi
+  Lainnya
+}
+
+enum StatusRelawan {
+  Siap
+  Terbatas
+  TidakAktif @map("Tidak Aktif")
+}
+
+enum Role {
+  RELAWAN
+  KOORDINATOR
+  ADMIN
+}
